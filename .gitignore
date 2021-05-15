@@ -108,3 +108,6 @@ build/
 
 # Windows shortcuts
 *.lnk
+
+# enviroment variables
+.env
