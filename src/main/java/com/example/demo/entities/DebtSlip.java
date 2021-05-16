@@ -18,7 +18,7 @@ public class DebtSlip {
 	@Column
 	private int IDCustomer;
 	@Column
-	private String desc;
+	private String description;
 	@Column
 	private int loan;
 	@Column
