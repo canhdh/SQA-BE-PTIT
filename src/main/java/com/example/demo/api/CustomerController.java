@@ -2,11 +2,7 @@ package com.example.demo.api;
 
 import java.util.Optional;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.entities.Customer;
 import com.example.demo.repository.CustomerRepository;
 
@@ -32,7 +28,24 @@ public class CustomerController {
         return customer.orElse(null);
     }
 
-    @GetMapping("name/{username}")
+    @PutMapping("/{id}")
+    public Customer updateCustomer(@PathVariable("id") int id, @RequestBody Customer customer) {
+        System.out.println("Customer:" + customer.getIDCustomer());
+        Optional<Customer> existCustomer = repository.findById(customer.getIDCustomer());
+        Customer result = existCustomer.get();
+        result.setIDCustomer(existCustomer.get().getIDCustomer());
+        result.setName(customer.getName());
+        result.setCmnd(customer.getCmnd());
+        result.setDateBorn(customer.getDateBorn());
+        result.setForm(customer.getForm());
+        result.setMaritalStatus(customer.getMaritalStatus());
+        result.setNationality(customer.getNationality());
+        result.setNumberPhone(customer.getNumberPhone());
+        result.setSex(customer.getSex());
+        return repository.save(result);
+    }
+
+    @GetMapping("/name/{username}")
     public Customer getCustomerByUserName(@PathVariable("username") String username) {
         return repository.findCustomerByUsername(username);
     }
