@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int IDStaff;
+	private int id;
 	@Column
 	private String username;
 	@Column

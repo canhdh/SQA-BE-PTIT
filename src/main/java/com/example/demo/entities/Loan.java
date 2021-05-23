@@ -11,30 +11,30 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-public class DebtSlip {
+public class Loan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int IDDebtSlip;
+	private int id;
 	@Column
-	private int IDCustomer;
+	private int idCustomer;
 	@Column
-	private String description;
+	private String purpose;
 	@Column
-	private int loan;
+	private int loanAmount;
 	@Column
-	private String date;
+	private String createdDate;
 	@Column
 	private String dateBegin;
 	@Column
-	private String dateEnd;
+	private String exceptedPaymentDate;
 	@Column
 	private String collateral;
 	@Column
-	private String pooDoc;
+	private String proofOfCollateralDocument;
 	@Column
-	private int income;
+	private float income;
 	@Column
-	private String poIncome;
+	private String proofOfIncomeDocument;
 	@Column
-	private String status;
+	private int status;
 }

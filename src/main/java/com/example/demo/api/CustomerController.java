@@ -1,52 +1,40 @@
 package com.example.demo.api;
 
-import java.util.Optional;
-
+import com.example.demo.service.CustomerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.entities.Customer;
-import com.example.demo.repository.CustomerRepository;
 
 @RestController
 @RequestMapping(path = "/customer", produces = "application/json")
 @CrossOrigin(origins = "*")
 public class CustomerController {
 
-    private final CustomerRepository repository;
+    private final CustomerService customerService;
 
-    public CustomerController(CustomerRepository repository) {
-        this.repository = repository;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping
-    public Iterable<Customer> getAllCustomers() {
-        return repository.findAll();
+    public ResponseEntity<?> getAllCustomers() {
+        return ResponseEntity.ok(customerService.getAllCustomer());
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable("id") int id) {
-        Optional<Customer> customer = repository.findById(id);
-        return customer.orElse(null);
+    public ResponseEntity<?> getCustomerById(@PathVariable("id") int id) {
+        return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 
-    @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable("id") int id, @RequestBody Customer customer) {
-        System.out.println("Customer:" + customer.getIDCustomer());
-        Optional<Customer> existCustomer = repository.findById(customer.getIDCustomer());
-        Customer result = existCustomer.get();
-        result.setIDCustomer(existCustomer.get().getIDCustomer());
-        result.setName(customer.getName());
-        result.setCmnd(customer.getCmnd());
-        result.setDateBorn(customer.getDateBorn());
-        result.setForm(customer.getForm());
-        result.setMaritalStatus(customer.getMaritalStatus());
-        result.setNationality(customer.getNationality());
-        result.setNumberPhone(customer.getNumberPhone());
-        result.setSex(customer.getSex());
-        return repository.save(result);
+    @PutMapping
+    public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) {
+        Customer existCustomer = customerService.getCustomerById(customer.getId());
+        customer.setUsername(existCustomer.getUsername());
+        return ResponseEntity.ok(customerService.updateCustomer(customer));
     }
 
-    @GetMapping("/name/{username}")
-    public Customer getCustomerByUserName(@PathVariable("username") String username) {
-        return repository.findCustomerByUsername(username);
+    @GetMapping("/user/{username}")
+    public ResponseEntity<?> getCustomerByUserName(@PathVariable("username") String username) {
+        return ResponseEntity.ok(customerService.getCustomerByUsername(username));
     }
 }

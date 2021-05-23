@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int IDCustomer;
+    private int id;
     @Column
     private String username;
     @Column
@@ -23,15 +23,15 @@ public class Customer {
     @Column
     private String email;
     @Column
-    private String dateBorn;
+    private String birthday;
     @Column
-    private String form;
+    private String address;
     @Column
-    private String sex;
+    private String gender;
     @Column
-    private String numberPhone;
+    private String phoneNumber;
     @Column
-    private String cmnd;
+    private String idCard;
     @Column
     private String nationality;
     @Column
