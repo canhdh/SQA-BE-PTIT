@@ -1,43 +1,84 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.LoanDTO;
 import com.example.demo.entities.Loan;
 import com.example.demo.repository.LoanRepository;
+import com.example.demo.service.CustomerService;
 import com.example.demo.service.LoanService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class LoanServiceImpl implements LoanService {
 
     private final LoanRepository repository;
+    private final CustomerService customerService;
 
-    public LoanServiceImpl(LoanRepository repository) {
+    public LoanServiceImpl(LoanRepository repository, CustomerService customerService) {
         this.repository = repository;
+        this.customerService = customerService;
     }
 
     @Override
-    public List<Loan> getAllLoan() {
-        return (List<Loan>) repository.findAll();
+    public List<LoanDTO> getAllLoan() {
+        return repository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Loan getLoanById(int id) {
-        return repository.findById(id).orElse(null);
+    public LoanDTO getLoanById(int id) {
+        return this.toDTO(Objects.requireNonNull(repository.findById(id).orElse(null)));
     }
 
     @Override
-    public List<Loan> getLoanByIdCustomer(int idCustomer) {
-        return repository.findLoansByIdCustomer(idCustomer);
+    public List<LoanDTO> getLoanByIdCustomer(int idCustomer) {
+        return repository.findLoansByIdCustomer(idCustomer).stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Loan createLoan(Loan loan) {
-        return repository.save(loan);
+    public LoanDTO createLoan(LoanDTO loanDTO) {
+        return this.toDTO(repository.save(this.toEntity(loanDTO)));
     }
 
     @Override
-    public Loan updateLoan(Loan loan) {
-        return repository.save(loan);
+    public LoanDTO updateLoan(LoanDTO loanDTO) {
+        return this.toDTO(repository.save(this.toEntity(loanDTO)));
+    }
+
+    private LoanDTO toDTO(Loan loan) {
+        return LoanDTO.builder()
+                .collateral(loan.getCollateral())
+                .createdDate(loan.getCreatedDate())
+                .customer(customerService.getCustomerById(loan.getIdCustomer()))
+                .dateBegin(loan.getDateBegin())
+                .exceptedPaymentDate(loan.getExceptedPaymentDate())
+                .loanAmount(loan.getLoanAmount())
+                .id(loan.getId())
+                .idCustomer(loan.getIdCustomer())
+                .income(loan.getIncome())
+                .proofOfIncomeDocument(loan.getProofOfIncomeDocument())
+                .proofOfCollateralDocument(loan.getProofOfCollateralDocument())
+                .purpose(loan.getPurpose())
+                .status(loan.getStatus())
+                .build();
+    }
+
+    private Loan toEntity(LoanDTO loanDTO) {
+        Loan loan = new Loan();
+        loan.setId(loanDTO.getId());
+        loan.setIdCustomer(loanDTO.getIdCustomer());
+        loan.setCreatedDate(loanDTO.getCreatedDate());
+        loan.setDateBegin(loanDTO.getDateBegin());
+        loan.setExceptedPaymentDate(loanDTO.getExceptedPaymentDate());
+        loan.setLoanAmount(loanDTO.getLoanAmount());
+        loan.setCollateral(loanDTO.getCollateral());
+        loan.setIncome(loanDTO.getIncome());
+        loan.setProofOfCollateralDocument(loanDTO.getProofOfCollateralDocument());
+        loan.setProofOfIncomeDocument(loanDTO.getProofOfIncomeDocument());
+        loan.setStatus(loanDTO.getStatus());
+        loan.setPurpose(loan.getPurpose());
+        return loan;
     }
 }

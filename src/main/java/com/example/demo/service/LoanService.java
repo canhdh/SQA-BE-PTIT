@@ -1,19 +1,20 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.LoanDTO;
 import com.example.demo.entities.Loan;
 
 import java.util.List;
 
 public interface LoanService {
 
-    List<Loan> getAllLoan();
+    List<LoanDTO> getAllLoan();
 
-    Loan getLoanById(int id);
+    LoanDTO getLoanById(int id);
 
-    List<Loan> getLoanByIdCustomer(int idCustomer);
+    List<LoanDTO> getLoanByIdCustomer(int idCustomer);
 
-    Loan createLoan(Loan loan);
+    LoanDTO createLoan(LoanDTO loanDTO);
 
-    Loan updateLoan(Loan loan);
+    LoanDTO updateLoan(LoanDTO loanDTO);
 
 }
