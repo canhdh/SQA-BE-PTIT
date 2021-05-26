@@ -53,7 +53,7 @@ public class LoanServiceImpl implements LoanService {
                 .createdDate(loan.getCreatedDate())
                 .customer(customerService.getCustomerById(loan.getIdCustomer()))
                 .dateBegin(loan.getDateBegin())
-                .exceptedPaymentDate(loan.getExceptedPaymentDate())
+                .expectedPaymentDate(loan.getExpectedPaymentDate())
                 .loanAmount(loan.getLoanAmount())
                 .id(loan.getId())
                 .idCustomer(loan.getIdCustomer())
@@ -71,7 +71,7 @@ public class LoanServiceImpl implements LoanService {
         loan.setIdCustomer(loanDTO.getIdCustomer());
         loan.setCreatedDate(loanDTO.getCreatedDate());
         loan.setDateBegin(loanDTO.getDateBegin());
-        loan.setExceptedPaymentDate(loanDTO.getExceptedPaymentDate());
+        loan.setExpectedPaymentDate(loanDTO.getExpectedPaymentDate());
         loan.setLoanAmount(loanDTO.getLoanAmount());
         loan.setCollateral(loanDTO.getCollateral());
         loan.setIncome(loanDTO.getIncome());

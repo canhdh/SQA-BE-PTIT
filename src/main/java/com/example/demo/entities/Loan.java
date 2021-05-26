@@ -26,7 +26,7 @@ public class Loan {
 	@Column
 	private String dateBegin;
 	@Column
-	private String exceptedPaymentDate;
+	private String expectedPaymentDate;
 	@Column
 	private String collateral;
 	@Column
