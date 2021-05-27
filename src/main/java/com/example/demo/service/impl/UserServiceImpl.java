@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return repository.findUserByUsername(username);
+        return repository.findDistinctFirstByUsername(username);
     }
 
     @Override
