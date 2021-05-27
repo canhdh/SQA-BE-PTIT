@@ -7,6 +7,8 @@ import com.example.demo.service.CustomerService;
 import com.example.demo.service.LoanService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -44,6 +46,11 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public LoanDTO createLoan(LoanDTO loanDTO) {
+        loanDTO.setStatus(1);
+        loanDTO.setCreatedDate(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        loanDTO.setDisbursementDate(null);
+        loanDTO.setDisbursedAmount(0.0);
+        loanDTO.setPaidAmount(0.0);
         return this.toDTO(repository.save(this.toEntity(loanDTO)));
     }
 
@@ -65,6 +72,9 @@ public class LoanServiceImpl implements LoanService {
                 .income(loan.getIncome())
                 .proofOfIncomeDocument(loan.getProofOfIncomeDocument())
                 .proofOfCollateralDocument(loan.getProofOfCollateralDocument())
+                .disbursedAmount(loan.getDisbursedAmount())
+                .paidAmount(loan.getPaidAmount())
+                .disbursementDate(loan.getDisbursementDate())
                 .purpose(loan.getPurpose())
                 .status(loan.getStatus())
                 .build();
@@ -82,6 +92,9 @@ public class LoanServiceImpl implements LoanService {
         loan.setIncome(loanDTO.getIncome());
         loan.setProofOfCollateralDocument(loanDTO.getProofOfCollateralDocument());
         loan.setProofOfIncomeDocument(loanDTO.getProofOfIncomeDocument());
+        loan.setPaidAmount(loanDTO.getPaidAmount());
+        loan.setDisbursementDate(loanDTO.getDisbursementDate());
+        loan.setDisbursedAmount(loanDTO.getDisbursedAmount());
         loan.setStatus(loanDTO.getStatus());
         loan.setPurpose(loanDTO.getPurpose());
         return loan;

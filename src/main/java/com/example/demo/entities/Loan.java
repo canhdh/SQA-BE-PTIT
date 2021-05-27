@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class Loan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	@Column
-	private int idCustomer;
+	private Integer idCustomer;
 	@Column
 	private String purpose;
 	@Column
-	private int loanAmount;
+	private Double loanAmount;
 	@Column
 	private String createdDate;
 	@Column
@@ -32,9 +32,15 @@ public class Loan {
 	@Column
 	private String proofOfCollateralDocument;
 	@Column
-	private float income;
+	private Double income;
 	@Column
 	private String proofOfIncomeDocument;
 	@Column
-	private int status;
+	private Integer status;
+	@Column
+	private Double disbursedAmount;
+	@Column
+	private String disbursementDate;
+	@Column
+	private Double paidAmount;
 }
