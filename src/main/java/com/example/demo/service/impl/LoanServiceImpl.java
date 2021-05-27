@@ -35,7 +35,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanDTO> getLoanByIdCustomer(int idCustomer) {
+    public List<LoanDTO> getLoanByIdCustomer(Integer idCustomer) {
         return repository.findLoansByIdCustomer(idCustomer).stream().map(this::toDTO).collect(Collectors.toList());
     }
 

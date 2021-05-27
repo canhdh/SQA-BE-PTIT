@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.LoanDTO;
+import org.springframework.data.relational.core.sql.In;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface LoanService {
 
     LoanDTO getLoanById(int id);
 
-    List<LoanDTO> getLoanByIdCustomer(int idCustomer);
+    List<LoanDTO> getLoanByIdCustomer(Integer idCustomer);
 
     List<LoanDTO> getLoanByStatus(Integer status);
 
