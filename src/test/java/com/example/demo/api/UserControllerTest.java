@@ -8,6 +8,7 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,6 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -70,6 +72,25 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password").value("123"))
                 .andExpect(jsonPath("$.position").value("customer"))
                 .andExpect(jsonPath("$.*", hasSize(4)))
+                .andReturn();
+    }
+
+    @Test
+    @DirtiesContext
+    public void VerifyInvalidUserId() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/user/" + 0).accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andReturn();
+    }
+
+    @Test
+    @DirtiesContext
+    public void VerifyNotExistUsername() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/user/name/" + "user@gmail.com")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound())
                 .andReturn();
     }
 }

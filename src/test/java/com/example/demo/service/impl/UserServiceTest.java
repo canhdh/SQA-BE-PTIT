@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entities.User;
 import com.example.demo.repository.UserRepository;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -35,6 +36,7 @@ public class UserServiceTest {
     @InjectMocks
     private UserServiceImpl userService;
 
+    @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
