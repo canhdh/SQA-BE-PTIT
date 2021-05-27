@@ -34,6 +34,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCustomerByUsername(String username) {
-        return repository.findCustomerByUsername(username);
+        return repository.findDistinctFirstByUsername(username);
     }
 }
