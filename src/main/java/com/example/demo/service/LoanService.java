@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.LoanDTO;
-import com.example.demo.entities.Loan;
 
 import java.util.List;
 
@@ -12,6 +11,8 @@ public interface LoanService {
     LoanDTO getLoanById(int id);
 
     List<LoanDTO> getLoanByIdCustomer(int idCustomer);
+
+    List<LoanDTO> getLoanByStatus(Integer status);
 
     LoanDTO createLoan(LoanDTO loanDTO);
 

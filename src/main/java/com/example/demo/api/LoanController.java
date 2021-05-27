@@ -26,13 +26,19 @@ public class LoanController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") int id) {
-        LoanDTO customer = loanService.getLoanById(id);
-        return ResponseEntity.ok(customer);
+        LoanDTO loan = loanService.getLoanById(id);
+        return ResponseEntity.ok(loan);
     }
 
     @GetMapping("/customer/{idCustomer}")
     public ResponseEntity<?> getLoanByIdCustomer(@PathVariable int idCustomer) {
         List<LoanDTO> loans = loanService.getLoanByIdCustomer(idCustomer);
+        return ResponseEntity.ok(loans);
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<?> getLoanByStatus(@RequestParam Integer status) {
+        List<LoanDTO> loans = loanService.getLoanByStatus(status);
         return ResponseEntity.ok(loans);
     }
 
@@ -43,6 +49,11 @@ public class LoanController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateLoan(@PathVariable int id, @RequestBody LoanDTO loanDTO) {
+        return ResponseEntity.ok(loanService.updateLoan(loanDTO));
+    }
+
+    @PutMapping("/status")
+    public ResponseEntity<?> updateLoanStatus(@RequestBody LoanDTO loanDTO) {
         return ResponseEntity.ok(loanService.updateLoan(loanDTO));
     }
 }

@@ -38,6 +38,11 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    public List<LoanDTO> getLoanByStatus(Integer status) {
+        return repository.findLoansByStatusEquals(status).stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public LoanDTO createLoan(LoanDTO loanDTO) {
         return this.toDTO(repository.save(this.toEntity(loanDTO)));
     }
@@ -78,7 +83,7 @@ public class LoanServiceImpl implements LoanService {
         loan.setProofOfCollateralDocument(loanDTO.getProofOfCollateralDocument());
         loan.setProofOfIncomeDocument(loanDTO.getProofOfIncomeDocument());
         loan.setStatus(loanDTO.getStatus());
-        loan.setPurpose(loan.getPurpose());
+        loan.setPurpose(loanDTO.getPurpose());
         return loan;
     }
 }
