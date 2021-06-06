@@ -19,4 +19,9 @@ public class Staff {
 	private String username;
 	@Column
 	private String name;
+	public Staff(int id, String username, String name) {
+		this.id = id;
+		this.username = username;
+		this.name = name;
+	}
 }
